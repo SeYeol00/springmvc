@@ -1,12 +1,10 @@
 package hello.springmvc.basic.request;
 
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -90,6 +88,25 @@ public class RequestParamController {
             //파라미터를 Map, MultiValueMap으로 조회가 가능하다.
             ){
         log.info("username={}, age={}",paramMap.get("username"),paramMap.get("age"));
+        return "ok";
+    }
+
+    //데이터를 넣는 걸 바인딩이라고 하는데 잘못 타입이 넣어지면 바인딩 익셉션이 뜬다.
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData){
+        log.info("username={}, age={}",helloData.getUsername(),helloData.getAge());
+        log.info("helloData={}",helloData);
+        return "ok";
+    }
+
+
+    // ModelAttribute 생략 가능
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData){
+        log.info("username={}, age={}",helloData.getUsername(),helloData.getAge());
+        log.info("helloData={}",helloData);
         return "ok";
     }
 }
